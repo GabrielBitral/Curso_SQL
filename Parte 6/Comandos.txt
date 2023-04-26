@@ -1,0 +1,39 @@
+initdb
+
+pg_ctl
+
+su(logar como outro usuário)
+
+log_connections
+	log_destination
+
+pg_ctl restart
+
+shared buffers
+
+------
+
+VACUUM - VACUUM FULL - VACUUM ANALYSE
+
+REINDEX
+
+----
+pg_dump -f 'DIRETÓRIO' 'BANCO'
+
+pg_restore -d alura 'DIRETÓRIO'
+
+--
+
+CREATE INDEX idx_salario ON instrutor(salario);
+
+EXPLAIN SELECT * FROM instrutor WHERE salario > 1500;
+
+------
+
+CREATE USER gabriel;
+
+CREATE ROLE sem_login LOGIN;
+
+REVOKE ALL ON DATABASE alura FROM gabriel;
+
+GRANT SELECT ON public.instrutor TO gabriel;

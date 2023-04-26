@@ -1,0 +1,90 @@
+1- SELECT COUNT(id) FROM clientes;
+
+2- SELECT planos.id AS plano_numero, 
+	  COUNT(clientes.id) AS quantidade_clientes
+	FROM planos 
+	JOIN clientes ON clientes.planos_id = planos.id 
+	GROUP BY plano_numero;
+
+3- SELECT nome FROM artistas;
+
+4- SELECT id AS "Número do Plano", valor, limite AS "Limite de Download" FROM planos;
+
+5- SELECT gravadoras.nome AS gravadora, 
+	  COUNT(artistas.id) AS quantidade_artistas
+	FROM gravadoras 
+	JOIN artistas ON artistas.gravadoras_id = gravadoras.id 
+	GROUP BY gravadora
+    	ORDER BY quantidade_artistas ASC;
+
+6- SELECT gravadoras.nome AS gravadora, 
+	  COUNT(artistas.id) AS quantidade_artistas
+	FROM gravadoras 
+	JOIN artistas ON artistas.gravadoras_id = gravadoras.id 
+	GROUP BY gravadora
+    	ORDER BY quantidade_artistas DESC
+    	LIMIT 1;
+
+7- SELECT musicas.nome
+	FROM musicas
+	JOIN musicas_has_artistas ON musicas.id = musicas_has_artistas.musicas_id
+	JOIN artistas ON artistas.id = musicas_has_artistas.artistas_id
+	WHERE artistas.nome = 'Mano Lima';
+
+8- SELECT DISTINCT musicas.nome 
+	FROM musicas
+	JOIN musicas_has_artistas ON musicas.id = musicas_has_artistas.musicas_id
+	JOIN artistas ON artistas.id = musicas_has_artistas.artistas_id
+	JOIN gravadoras ON gravadoras.id = artistas.gravadoras_id
+	WHERE gravadoras.nome = 'ACIT';
+
+9- SELECT generos.descricao AS genero,
+	  COUNT(musicas.id) AS quantidade_musicas
+	FROM generos
+	JOIN musicas ON musicas.generos_id = generos.id
+	GROUP BY genero
+	ORDER BY quantidade_musicas ASC;
+
+10- SELECT clientes.login AS nome_cliente,
+	   COUNT(musicas_has_clientes.id) AS quantidade_musicas
+	FROM clientes
+	JOIN musicas_has_clientes ON musicas_has_clientes.clientes_id = clientes.id
+	GROUP BY nome_cliente
+	ORDER BY quantidade_musicas ASC;
+
+11- SELECT generos.descricao AS genero,
+	   COUNT(musicas.id) as numero_de_musicas
+	FROM generos
+	JOIN musicas ON musicas.generos_id = generos.id
+	JOIN musicas_has_clientes ON musicas_has_clientes.musicas_id = musicas.id
+	JOIN clientes ON clientes.id = musicas_has_clientes.clientes_id
+	JOIN planos ON planos.id = clientes.planos_id
+	WHERE planos.descricao = 'Full'
+	GROUP BY genero
+	ORDER BY numero_de_musicas DESC;
+
+12- SELECT artistas.nome AS artista, 
+	   gravadoras.nome AS gravadora, 
+	   COUNT(musicas.id) as numero_de_musicas 
+	FROM artistas 
+	JOIN gravadoras ON gravadoras.id = artistas.gravadoras_id 
+	JOIN musicas_has_artistas ON musicas_has_artistas.artistas_id = artistas.id 
+	JOIN musicas ON musicas.id = musicas_has_artistas.musicas_id 
+	JOIN musicas_has_clientes ON musicas_has_clientes.musicas_id = musicas.id 
+	JOIN clientes ON clientes.id = musicas_has_clientes.clientes_id 
+	JOIN planos ON planos.id = clientes.planos_id 
+	WHERE planos.descricao = 'Full' 
+	GROUP BY artista, gravadora 
+	ORDER BY numero_de_musicas, gravadora DESC;
+
+13- SELECT planos.descricao AS nome_plano,
+	   COUNT(clientes.id) AS quantidade_de_clientes,
+	   SUM(planos.valor) AS valor
+	FROM planos
+	JOIN clientes ON clientes.planos_id = planos.id
+	GROUP BY nome_plano
+    	ORDER BY valor DESC;
+
+14- SELECT SUM(planos.valor)
+	FROM planos
+	JOIN clientes ON clientes.planos_id = planos.id;   

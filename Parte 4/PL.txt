@@ -1,0 +1,52 @@
+CREATE OR REPLACE FUNCTION primeira_pl() RETURNS INTEGER AS $$
+	DECLARE 
+		primeira_variavel INTEGER DEFAULT 3;
+	BEGIN
+		primeira_variavel := primeira_variavel * 2;
+		RETURN primeira_variavel;
+	END
+$$ LANGUAGE plpgsql;
+
+SELECT primeira_pl();
+
+CREATE OR REPLACE FUNCTION primeira_pl() RETURNS INTEGER AS $$
+	DECLARE 
+		primeira_variavel INTEGER DEFAULT 3;
+	BEGIN
+		primeira_variavel := primeira_variavel * 2;
+		
+		DECLARE
+			primeira_variavel INTEGER;
+		BEGIN
+			primeira_variavel := 7;
+		END;
+		
+		RETURN primeira_variavel;
+	END
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION cria_a(nome VARCHAR) RETURNS void AS $$
+	BEGIN
+		INSERT INTO a (nome) VALUES('Patrícia');
+	END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION cria_instrutor_falso() RETURNS instrutor AS $$
+	DECLARE
+		retorno instrutor;
+	BEGIN
+		SELECT 22, 'Nome Falso', 200::DECIMAL INTO retorno;
+	
+		RETURN retorno;
+	END;
+$$ LANGUAGE plpgsql;
+
+SELECT id, salario FROM cria_instrutor_falso();
+
+CREATE OR REPLACE FUNCTION instrutores_bem_pagos(valor_salario DECIMAL) RETURNS SETOF instrutor AS $$
+	BEGIN
+		RETURN QUERY SELECT * FROM instrutor WHERE salario > valor_salario;
+	END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM instrutores_bem_pagos(300);

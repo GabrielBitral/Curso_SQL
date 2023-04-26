@@ -1,0 +1,46 @@
+SELECT * FROM academico.curso ORDER BY 1;
+UPDATE academico.curso SET nome = 'PHP Básico' WHERE id = 4;
+UPDATE academico.curso SET nome = 'C++ Básico' WHERE id = 6;
+
+UPDATE teste.cursos_programacao SET nome_curso = nome
+	FROM academico.curso 
+	WHERE teste.cursos_programacao.id_curso = academico.curso.id
+	AND academico.curso.id < 10;
+	
+SELECT * FROM teste.cursos_programacao;
+
+BEGIN;
+DELETE FROM teste.cursos_programacao;
+ROLLBACK;
+
+BEGIN;
+DELETE FROM teste.cursos_programacao WHERE id_curso = 60;
+COMMIT;
+
+CREATE SEQUENCE eu_criei;
+
+SELECT NEXTVAL('eu_criei');
+
+CREATE TEMPORARY TABLE auto (
+	id INTEGER PRIMARY KEY DEFAULT NEXTVAL('eu_criei'),
+	nome VARCHAR(30) NOT NULL
+);
+
+DROP TABLE auto;
+INSERT INTO auto (nome) VALUES ('Vinicius Dias');
+INSERT INTO auto (id, nome) VALUES (2, 'Vinicius Dias');
+
+SELECT * FROM auto;
+
+TYPES---
+CREATE TYPE CLASSIFICACAO AS ENUM('LIVRE', '12_ANOS', '14_ANOS', '16_ANOS', '18_ANOS');
+CREATE TEMPORARY TABLE filme (
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(255) NOT NULL,
+	classificacao CLASSIFICACAO
+);
+
+INSERT INTO filme(nome, classificacao) VALUES('Um filme qualquer', '18_ANOS');
+SELECT * FROM filme;
+
+

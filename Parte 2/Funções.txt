@@ -1,0 +1,10 @@
+SELECT (primeiro_nome || ' ' || ultimo_nome) AS nome_completo FROM aluno;
+SELECT TRIM(UPPER(CONCAT('Vinicius', ' ', 'Dias')) || ' ');
+
+SELECT (primeiro_nome || ' ' || ultimo_nome) AS nome_completo,
+(NOW()::DATE - data_nascimento) / 365
+FROM aluno;
+
+SELECT TO_CHAR(NOW(), 'DD,MONTH,YYYY');
+
+SELECT TO_CHAR(128.3::REAL,'9999099');
